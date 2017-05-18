@@ -5,11 +5,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CGraph.Window"
-        mc:Ignorable="d"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen"
         Title="Graph" Height="560.976" Width="679.244" Loaded="OnWindowLoaded">
     <Grid Background="LightBlue">
         <Grid Background="white" x:Name="HoldingGrid" Margin="166,0,0,0" ClipToBounds="True">
-            <Canvas Name="CanGraph" Background="White" MouseWheel="OnCanvasMouseWheel" MouseDown="OnCanvasMouseDown" MouseMove="OnCanvasMouseMove" RenderTransformOrigin="0.5 0.5">
+            <Canvas Name="CanGraph" Background="White" MouseWheel="OnCanvasMouseWheel" MouseMove="OnCanvasMouseMove">
                 <Canvas.RenderTransform>
                     <TransformGroup>
                         <TranslateTransform x:Name="CanTranslate"></TranslateTransform>

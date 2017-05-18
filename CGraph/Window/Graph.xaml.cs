@@ -353,8 +353,8 @@ namespace CGraph.Window
                 CanScale.BeginAnimation(ScaleTransform.ScaleXProperty, da);
                 CanScale.BeginAnimation(ScaleTransform.ScaleYProperty, da);
 
-                //CanScale.ScaleX *= s;
-                //CanScale.ScaleY *= s;
+                QuickPan(e);
+                
             }
             else
             {
@@ -374,47 +374,32 @@ namespace CGraph.Window
                     CanScale.BeginAnimation(ScaleTransform.ScaleXProperty, da);
                     CanScale.BeginAnimation(ScaleTransform.ScaleYProperty, da);
 
+                    QuickPan(e);
                     
-
-                    //CanScale.ScaleX /= s;
-                    //CanScale.ScaleY /= s;
                     Limit();
                 }
             }
         }
-        
+
 
         private void OnValueChange(object sender, TextChangedEventArgs e)
         {
             Paint();
         }
-        
-        private Point prevPos;
-
-        private double prevX, prevY;
-
-        private void OnCanvasMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.MiddleButton == MouseButtonState.Pressed)
-            {
-                prevPos = e.GetPosition(this);
-                prevX = CanTranslate.X;
-                prevY = CanTranslate.Y;
-            }
-        }
 
         private void OnCanvasMouseMove(object sender, MouseEventArgs e)
         {
-            if (scaleUnits > 0 && e.MiddleButton == MouseButtonState.Pressed)
-            {
-                var newPos = e.GetPosition(this) - prevPos;
+           QuickPan(e);
+        }
 
-                // Move the canvas
-                CanTranslate.X = prevX + newPos.X / CanScale.ScaleX;
-                CanTranslate.Y = prevY + newPos.Y / CanScale.ScaleY;
+        private void QuickPan(MouseEventArgs e)
+        {
+            //Calculate the center point
+            var mousePos = e.GetPosition(HoldingGrid);
+            var xpercent = mousePos.X / HoldingGrid.ActualWidth;
+            var ypercent = mousePos.Y / HoldingGrid.ActualHeight;
 
-                Limit();
-            }
+            CanGraph.RenderTransformOrigin = new Point(xpercent, ypercent);
         }
 
         /// <summary>
